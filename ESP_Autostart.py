@@ -48,7 +48,9 @@ def serialOn():
             #ESPsend(chr(4))
             ESPsend(chr(3))
             time.sleep(1)
-            
+            ESPsend(chr(3))
+            time.sleep(1)
+
             if ser.inWaiting() != 0:
                 ser.read()
                 return (comport)
@@ -83,7 +85,8 @@ def autoon():
     if ser.isOpen() == False:start()
     ESPsend("import os")
     ESPsend("os.rename('mainxxx.py','main.py')")
-    res=""       
+    res=""  
+    time.sleep(0.5)     
     while ser.inWaiting() != 0:
         a=ser.read()
         res+=a.decode("utf-8")
@@ -107,6 +110,7 @@ def start():
             status.config(text=statustxt)
             ESPsend("import os")
             ESPsend("os.listdir()")
+            time.sleep(0.5) 
             while ser.inWaiting() != 0:
                 a=ser.read()
                 res+=a.decode("utf-8")
@@ -118,8 +122,7 @@ def start():
             break
         else:
             if askyesno("No ESP found!!! Try again?"):
-                ser.close()
-                pass
+                continue
             else:
                 exit()
 
